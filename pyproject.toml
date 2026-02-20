@@ -1,0 +1,18 @@
+[project]
+name = "bcgeDataPy"
+dynamic = ["version"]
+dependencies = [
+    "pandas"
+]
+requires-python = ">= 3.1"
+authors = [
+    {name = "Heidi Steadman", email = "hstead05@byu.edu"},
+    {name = "Shu-Fei Lo", email = "shufeilo@byu.edu"},
+    {name = "Stephen Piccolo", email = "stephen_piccolo@byu.edu"}
+]
+maintainers = [
+    {name = "Stephen Piccolo", email = "stephen_piccolo@byu.edu"}
+]
+description = "Python version of AnnotatedBCGEData R package with access to 100+ annotated BRCA gene expression datasets."
+readme = "README.md"
+keywords = ["gene expression", "data", "breast cancer", "pandas", "Bioconductor", "Summarized Experiment"]
