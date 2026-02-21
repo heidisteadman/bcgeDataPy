@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "bcgeDataPy"
 dynamic = ["version"]
@@ -16,3 +20,7 @@ maintainers = [
 description = "Python version of AnnotatedBCGEData R package with access to 100+ annotated BRCA gene expression datasets."
 readme = "README.md"
 keywords = ["gene expression", "data", "breast cancer", "pandas", "Bioconductor", "Summarized Experiment"]
+
+[project.urls]
+Repository = "https://github.com/heidisteadman/bcgeDataPy"
+Issues = "https://github.com/heidisteadman/bcgeDataPy/issues"
