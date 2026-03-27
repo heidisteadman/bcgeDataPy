@@ -6,7 +6,8 @@ build-backend = "hatchling.build"
 name = "bcgeDataPy"
 dynamic = ["version"]
 dependencies = [
-    "pandas>=2.0"
+    "pandas>=2.0",
+    "requests"
 ]
 requires-python = ">= 3.1"
 authors = [

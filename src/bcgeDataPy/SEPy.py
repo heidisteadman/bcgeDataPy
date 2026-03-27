@@ -1,7 +1,7 @@
 import pandas as pd
 
 class SummarizedExperimentPy:
-    def __init__(self, data, metadata):
+    def __init__(self, data:str, metadata:str):
         self.data = data 
         self.metadata = metadata 
     

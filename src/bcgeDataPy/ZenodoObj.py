@@ -1,4 +1,5 @@
 import requests
+from pathlib import Path
 
 class ZenObj:
     def __init__(self, conceptdoi):
@@ -10,3 +11,38 @@ class ZenObj:
                                          "size": 25,
                                          "sort": "mostrecent"
                                      })
+        self.json = self.jsonresp.json()
+    
+    def parse_json(self) -> str:
+        hits = self.json['hits']['hits'][0]
+        doi_id = hits['id']
+        download_link = f"https://zenodo.org/api/records/, {doi_id}, /files-archive"
+        return download_link 
+    
+    def get_versions(self, v:int) -> str:
+        hits = self.json['hits']['hits'][0]
+        links = hits['links']
+        versions = links['versions']
+        versresp = requests.get(url=versions)
+        versjson = versresp.json() 
+        verhits = versjson['hits']['hits']
+
+        if ((len(verhits)-v)>0):
+            vers = verhits[(len(verhits)-v)]
+            verid = vers['id']
+            download_link = f"https://zenodo.org/api/records/, {verid}, /files-archive"
+            return download_link 
+        else:
+            return self.parse_json()
+    
+    def download_file(self, link: str, path: Path) -> None:
+        downloaded_file = requests.get(link)
+        with open(path, 'wb') as f:
+            f.write(downloaded_file.content)
+        return 
+    
+    def most_recent(self) -> int:
+        hits = self.json['hits']['hits'][0]
+        version = hits['metadata']['relations']['version']
+        index = version[0]['index']
+        return (int(index)+1)

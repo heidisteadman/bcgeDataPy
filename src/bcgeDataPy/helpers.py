@@ -1,10 +1,24 @@
-import requests 
+from pathlib import Path
+from pybiocfilecache import BiocFileCache
+from ZenodoObj import ZenObj
+from SEPy import SummarizedExperimentPy
 
-response = requests.get(url="https://zenodo.org/api/records",
-                        params={
-                            "q": "conceptdoi:10.5281/zenodo.17428997",
-                            "size": 25,
-                            "sort": "mostrecent"}
-                        )
-data = response.json()
-print(data)
+def makeCache(filepath):
+    path = Path(filepath)
+    if not path.exists():
+        raise ValueError("Invalid filepath")
+    else:
+        cache = BiocFileCache(filepath)
+        return cache 
+
+def chooseVersion(datasetID: str, dataset: ZenObj, cache: BiocFileCache|str, v: int) -> SummarizedExperimentPy:
+    dirPath = f"{cache}/{datasetID}v{v}"
+    path = Path(dirPath)
+    if not path.exists():
+        print("Either the data was not found in the cache or a new version was requested. Downloading now.")
+        link = dataset.get_versions(v)
+        dataset.download_file(link, path)
+    expData = (f"{dirPath}/{datasetID}.tsv.gz")
+    metadata = (f"{dirPath}/{datasetID}_metadata.tsv")
+
+    return SummarizedExperimentPy(expData, metadata)
