@@ -7,7 +7,9 @@ name = "bcgeDataPy"
 dynamic = ["version"]
 dependencies = [
     "pandas>=2.0",
-    "requests"
+    "requests",
+    "pathlib",
+    "pybiocfilecache"
 ]
 requires-python = ">= 3.1"
 authors = [

@@ -31,5 +31,3 @@ def getDataset(datasetID: str, version: int|None=None, cacheDirPath: str=tempfil
     metaPath = f"{cacheDirPath}/{datasetID}v{version_recent}/{identifierList[2]}"
     
     return SummarizedExperimentPy(expPath, metaPath)
-
-print(getDataset("GSE41197"))

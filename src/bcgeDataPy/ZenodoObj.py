@@ -27,8 +27,8 @@ class ZenObj:
         versjson = versresp.json() 
         verhits = versjson['hits']['hits']
 
-        if ((len(verhits)-v)>0):
-            vers = verhits[(len(verhits)-v)]
+        if ((len(verhits)-v-1)>=0):
+            vers = verhits[(len(verhits)-v-1)]
             verid = vers['id']
             download_link = f"https://zenodo.org/api/records/, {verid}, /files-archive"
             return download_link 
