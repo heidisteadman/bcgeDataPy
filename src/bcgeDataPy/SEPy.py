@@ -1,7 +1,8 @@
 import pandas as pd
+from pathlib import Path
 
 class SummarizedExperimentPy:
-    def __init__(self, data:str, metadata:str):
+    def __init__(self, data:Path, metadata:Path):
         self.data = data 
         self.metadata = metadata 
     

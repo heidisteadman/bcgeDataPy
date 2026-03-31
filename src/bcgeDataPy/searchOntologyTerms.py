@@ -1,7 +1,7 @@
 import tempfile
 from pathlib import Path
-from helpers import downloadZenFile
 import pandas as pd
+from ZenodoObj import ZenObj
 
 def searchNames(term, table):
     table = table[table['Preferred Label'].str.contains(term, case=False) | 
@@ -26,7 +26,7 @@ def searchCode(term, table):
 
 
 
-def searchOntologyTerms(term:str, term_type:str = "Name"):
+def searchOntologyTerms(term:str, term_type:str = "Name") -> pd.DataFrame:
     acceptable_terms = ["Name", "Definition", "URI", "Code"]
     if term_type not in acceptable_terms:
         raise ValueError("Invalid term type. Valid options are Name, Definition, URI, and Code.")
@@ -34,12 +34,15 @@ def searchOntologyTerms(term:str, term_type:str = "Name"):
     ontology_identifiers = ["10.5281/zenodo.17488901", 
                       "NCIT_definitions_filtered.tsv.gz"]
     
+    zenFile = ZenObj(ontology_identifiers[0])
     temp = tempfile.gettempdir()
-    dirPath = Path(f"{temp}/{ontology_identifiers[1]}")
-    if not dirPath.exists():
-        downloadZenFile(ontology_identifiers[0], temp)
+    dirPath = Path(f"{temp}/definitionsFile")
+    filePath = dirPath / ontology_identifiers[1]
+    if not filePath.exists():
+        download_link = zenFile.parse_json()
+        zenFile.download_file(download_link, dirPath)
     
-    termTable = pd.read_csv(f"{temp}/{ontology_identifiers[1]}", sep="\t")
+    termTable = pd.read_csv(filePath, sep="\t")
 
     if term_type == "Name":
         return searchNames(term, termTable) 

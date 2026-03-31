@@ -21,13 +21,13 @@ def getDataset(datasetID: str, version: int|None=None, cacheDirPath: str=tempfil
     
     version_recent = data.most_recent()
     dirPath = Path(f"{cacheDirPath}/{datasetID}v{version_recent}")
+    expPath = Path(f"{cacheDirPath}/{datasetID}v{version_recent}/{identifierList[1]}")
+    metaPath = Path(f"{cacheDirPath}/{datasetID}v{version_recent}/{identifierList[2]}")
     
-    if not dirPath.exists():
+    if not expPath.exists():
         link = data.parse_json()
         print("The data was not found in the cache. Downloading now.")
         data.download_file(link, dirPath)
-    
-    expPath = f"{cacheDirPath}/{datasetID}v{version_recent}/{identifierList[1]}"
-    metaPath = f"{cacheDirPath}/{datasetID}v{version_recent}/{identifierList[2]}"
+
     
     return SummarizedExperimentPy(expPath, metaPath)

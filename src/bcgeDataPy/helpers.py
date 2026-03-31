@@ -19,12 +19,12 @@ def chooseVersion(datasetID: str, dataset: ZenObj, cache: BiocFileCache|str, v: 
         print("Either the data was not found in the cache or a new version was requested. Downloading now.")
         link = dataset.get_versions(v)
         dataset.download_file(link, path)
-    expData = (f"{dirPath}/{datasetID}.tsv.gz")
-    metadata = (f"{dirPath}/{datasetID}_metadata.tsv")
+    expData = (Path(f"{dirPath}/{datasetID}.tsv.gz"))
+    metadata = (Path(f"{dirPath}/{datasetID}_metadata.tsv"))
 
     return SummarizedExperimentPy(expData, metadata)
 
-def downloadZenFile(conceptDOI:str, path:str) -> None:
+def downloadZenFile(conceptDOI:str, path:Path) -> None:
     cdoi = f"conceptdoi:{conceptDOI}"
     jsonresp = requests.get(url="https://zenodo.org/api/records",
                                      params={
