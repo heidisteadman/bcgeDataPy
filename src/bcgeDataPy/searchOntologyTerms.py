@@ -27,6 +27,31 @@ def searchCode(term, table):
 
 
 def searchOntologyTerms(term:str, term_type:str = "Name") -> pd.DataFrame:
+    """
+    Function that searches for ontology terms.
+
+    Accepts a string to search by and which ontology field to search 
+    ontology terms associated with that string. This could
+    be the name of the term itself, the term's definition,
+    the unique identifier (code) associated with that term,
+    or its URL. The function returns a tibble with information
+    about the matching ontology term(s).
+
+    Args:
+        term (str): The term to search for
+        term_type (str): Ontology field to search: Name, URI, Code, or
+                         Definition. When Name (default) is provided, it also searches
+                         based on synonyms.
+    
+    Returns:
+        pd.DataFrame: A data frame with a row for each matching ontology term.
+        
+    Examples:
+        >>> searchOntologyTerms("Progesterone Receptor Status")
+        A pandas dataframe object
+    
+    """
+
     acceptable_terms = ["Name", "Definition", "URI", "Code"]
     if term_type not in acceptable_terms:
         raise ValueError("Invalid term type. Valid options are Name, Definition, URI, and Code.")

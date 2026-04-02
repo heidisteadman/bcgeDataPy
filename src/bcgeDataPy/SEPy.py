@@ -7,6 +7,10 @@ class SummarizedExperimentPy:
         self.metadata = metadata 
     
     def assay(self):
+        """
+        Method that returns a pandas dataframe containing the gene expression values for the dataset.
+        """
+
         exp_data = pd.read_csv(self.data, sep="\t")
         exp_data = exp_data[~exp_data["Chromosome"].str.startswith("H")]
         exp_data = exp_data.set_index("Ensembl_Gene_ID")
@@ -14,10 +18,17 @@ class SummarizedExperimentPy:
         return exp_data  
     
     def colData(self):
+        """
+        Method that returns a pandas dataframe containing the sample metadata values for the dataset.
+        """
+
         meta = pd.read_csv(self.metadata, sep="\t")
         return meta
     
     def rowData(self):
+        """
+        Method that returns a pandas dataframe containing information about the individual genes measured.
+        """
         exp = pd.read_csv(self.data, sep="\t")
         exp = exp[~exp["Chromosome"].str.startswith("H")]
         features = exp[["Dataset_ID", "Entrez_Gene_ID", "HGNC_Symbol", "Ensembl_Gene_ID", "Chromosome", "Gene_Biotype"]]

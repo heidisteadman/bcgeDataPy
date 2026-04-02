@@ -2,7 +2,6 @@ from pathlib import Path
 from pybiocfilecache import BiocFileCache
 from ZenodoObj import ZenObj
 from SEPy import SummarizedExperimentPy
-import requests
 
 def makeCache(filepath):
     path = Path(filepath)

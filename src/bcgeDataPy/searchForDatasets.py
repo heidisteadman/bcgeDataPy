@@ -4,6 +4,27 @@ from pathlib import Path
 from ZenodoObj import ZenObj
 
 def searchForDatasetFields(terms: list[str]) -> pd.DataFrame:
+    """
+    Function that searches breast cancer datasets based on ontology terms mapped to data fields.
+
+    Accepts an ontology term code and searches for datasets based on fields
+    (metadata columns) that have been mapped to that ontology term.
+    Returns a data frame with the dataset identifier, field name, and  
+    code. Users can then pass the dataset identifiers to the getDataset
+    function.
+
+    Args:
+        terms (list[str]): is an ontology term code retrieved using the searchOntologyTerms function.
+    
+    Returns:
+        pd.DataFrame: a data frame providing information about any identified datasets.
+    
+    Examples:
+        >>> searchForDatasetFields(["C16149"])
+        pandas DataFrame object
+    
+    """
+
     identifiers = ['10.5281/zenodo.17583904', 'filtered_mapped_data.tsv.gz']
     dataPath = Path(f"{tempfile.gettempdir()}/mappedData")
     filePath = dataPath / identifiers[1]
@@ -20,6 +41,27 @@ def searchForDatasetFields(terms: list[str]) -> pd.DataFrame:
     return matches
 
 def searchForDatasetValues(terms: list[str]) -> pd.DataFrame:
+    """
+    Function that searches breast cancer datasets based on ontology terms mapped to data values.
+
+    Accepts an ontology term code and searches for datasets based on metadata values
+    that have been mapped to that ontology term.
+    Returns a data frame with the dataset identifier, field name, original values, and  
+    code. Users can then pass the dataset identifiers to the getDataset
+    function.
+
+    Args:
+        terms (list[str]): is an ontology term code retrieved using the searchOntologyTerms function.
+    
+    Returns:
+        pd.DataFrame: a data frame providing information about any identified datasets.
+    
+    Examples:
+        >>> searchForDatasetValues(["C15496"])
+        pandas DataFrame object
+    
+    """
+
     identifiers = ['10.5281/zenodo.17583904', 'filtered_mapped_data.tsv.gz']
     dataPath = Path(f"{tempfile.gettempdir()}/mappedData")
     filePath = dataPath / identifiers[1]
