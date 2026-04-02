@@ -23,21 +23,3 @@ def chooseVersion(datasetID: str, dataset: ZenObj, cache: BiocFileCache|str, v: 
     metadata = (Path(f"{dirPath}/{datasetID}_metadata.tsv"))
 
     return SummarizedExperimentPy(expData, metadata)
-
-def downloadZenFile(conceptDOI:str, path:Path) -> None:
-    cdoi = f"conceptdoi:{conceptDOI}"
-    jsonresp = requests.get(url="https://zenodo.org/api/records",
-                                     params={
-                                         "q": cdoi,
-                                         "size": 25,
-                                         "sort": "mostrecent"
-                                     })
-
-    js = jsonresp.json()
-    hits = js['hits']['hits'][0]
-    doi_id = hits['id']
-    download_link = f"https://zenodo.org/api/records/, {doi_id}, /files-archive"
-    downloaded_file = requests.get(download_link)
-    with open(path, 'wb') as f:
-        f.write(downloaded_file.content)
-    return
