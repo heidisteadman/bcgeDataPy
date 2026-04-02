@@ -1,18 +1,12 @@
-import requests
 from pathlib import Path
 import zipfile
 import io
+from helpers import tryDownload, tryGetRecord
 
 class ZenObj:
     def __init__(self, conceptdoi):
         self.conceptdoi = conceptdoi 
-        cdoi = f"conceptdoi:{conceptdoi}"
-        self.jsonresp = requests.get(url="https://zenodo.org/api/records",
-                                     params={
-                                         "q": cdoi,
-                                         "size": 25,
-                                         "sort": "mostrecent"
-                                     })
+        self.jsonresp = tryGetRecord(conceptdoi)
         self.json = self.jsonresp.json()
     
     def parse_json(self) -> str:
@@ -25,7 +19,7 @@ class ZenObj:
         hits = self.json['hits']['hits'][0]
         links = hits['links']
         versions = links['versions']
-        versresp = requests.get(url=versions)
+        versresp = tryDownload(versions)
         versjson = versresp.json() 
         verhits = versjson['hits']['hits']
 
@@ -38,7 +32,7 @@ class ZenObj:
             return self.parse_json()
     
     def download_file(self, link: str, path: Path) -> None:
-        downloaded_file = requests.get(link)
+        downloaded_file = tryDownload(link)
         path.mkdir(parents=True, exist_ok=True)
         with zipfile.ZipFile(io.BytesIO(downloaded_file.content)) as z:
             for filename in z.infolist():

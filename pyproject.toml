@@ -9,7 +9,10 @@ dependencies = [
     "pandas>=2.0",
     "requests",
     "pathlib",
-    "pybiocfilecache"
+    "pybiocfilecache",
+    "io",
+    "zipfile",
+    "tempfile"
 ]
 requires-python = ">= 3.1"
 authors = [
