@@ -1,4 +1,4 @@
-from ZenodoObj import ZenObj
+from .ZenodoObj import ZenObj
 import pandas as pd
 from pathlib import Path 
 import tempfile

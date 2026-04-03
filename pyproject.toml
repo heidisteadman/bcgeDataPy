@@ -1,6 +1,11 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm.build]
+excludes = ["docs/"]
+includes = ["src/bcgeDataPy/"]
+package-dir = "src"
 
 [project]
 name = "bcgeDataPy"
@@ -8,11 +13,7 @@ dynamic = ["version"]
 dependencies = [
     "pandas>=2.0",
     "requests",
-    "pathlib",
-    "pybiocfilecache",
-    "io",
-    "zipfile",
-    "tempfile"
+    "pybiocfilecache"
 ]
 requires-python = ">= 3.1"
 authors = [

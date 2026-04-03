@@ -1,8 +1,8 @@
-from SEPy import SummarizedExperimentPy
+from .SEPy import SummarizedExperimentPy
 import tempfile 
-from helpers import makeCache, chooseVersion
-from identifierFile import getIdentifiers
-from ZenodoObj import ZenObj
+from .helpers import makeCache
+from .identifierFile import getIdentifiers
+from .ZenodoObj import ZenObj
 from pathlib import Path
 
 def getDataset(datasetID: str, version: int|None=None, cacheDirPath: str=tempfile.gettempdir()) -> SummarizedExperimentPy:
@@ -30,17 +30,14 @@ def getDataset(datasetID: str, version: int|None=None, cacheDirPath: str=tempfil
         SummarizedExperimentPy Object
     
     """
-    if (cacheDirPath != tempfile.gettempdir()):
-        cache = makeCache(cacheDirPath)
-    else:
-        cache = cacheDirPath
     
     identifiers = getIdentifiers()
     identifierList = identifiers[datasetID]
     data = ZenObj(identifierList[0])
     
     if version is not None:
-        seData: SummarizedExperimentPy = chooseVersion(datasetID, data, cache, version)
+        p = Path(f"{cacheDirPath}/{datasetID}v{version}")
+        seData: SummarizedExperimentPy = data.chooseVersion(p, version, datasetID)
         return seData
     
     version_recent = data.most_recent()

@@ -1,7 +1,8 @@
 from pathlib import Path
 import zipfile
 import io
-from helpers import tryDownload, tryGetRecord
+from .helpers import tryDownload, tryGetRecord
+from .SEPy import SummarizedExperimentPy
 
 class ZenObj:
     def __init__(self, conceptdoi):
@@ -45,3 +46,14 @@ class ZenObj:
         version = hits['metadata']['relations']['version']
         index = version[0]['index']
         return (int(index)+1)
+    
+    def chooseVersion(self, path: Path, v:int, datasetID: str) -> SummarizedExperimentPy:
+        expData = path / f"{datasetID}.tsv.gz"
+        metadata = path / f"{datasetID}_metadata.tsv"
+        if not expData.exists():
+            print("Either the data was not found in the cache or a new version was requested. Downloading now.")
+            link = self.get_versions(v)
+            self.download_file(link, path)
+        
+
+        return SummarizedExperimentPy(expData, metadata)

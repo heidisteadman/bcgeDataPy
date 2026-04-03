@@ -1,7 +1,7 @@
 import pandas as pd
 import tempfile 
 from pathlib import Path
-from ZenodoObj import ZenObj
+from .ZenodoObj import ZenObj
 
 def searchForDatasetFields(terms: list[str]) -> pd.DataFrame:
     """

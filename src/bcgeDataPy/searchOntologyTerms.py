@@ -1,7 +1,7 @@
 import tempfile
 from pathlib import Path
 import pandas as pd
-from ZenodoObj import ZenObj
+from .ZenodoObj import ZenObj
 
 def searchNames(term, table):
     table = table[table['Preferred Label'].str.contains(term, case=False) | 
